@@ -6,7 +6,9 @@
     Ext.define('RatioGaugeModel', {
         extend: 'Ext.data.Model',
         fields: [
-            {name: 'value', type: 'number', mapping: 'Value'},
+            {name: 'value', type: 'number', mapping: 'Value', convert: function(v) {
+                return v === '?' ? null : parseFloat(v);
+            }},
             {name: 'limit', type: 'number', mapping: 'malvarde', convert: function(v) {
                 return v === 'NA' ? null : parseFloat(v);
             }},

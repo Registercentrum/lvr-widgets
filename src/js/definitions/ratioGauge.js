@@ -62,6 +62,9 @@
     }
 
     function getState(report) {
+        if (report.value === null) {
+            return 'insufficient';
+        }
         if (report.limit !== null) {
             if (report.Svarsfrekvens < FREQUENCE_LIMIT) {
                 return 'insufficient';
@@ -109,7 +112,7 @@
                 frame: false,
                 data: {
                     text: report.description,
-                    value: Ext.util.Format.number(report.value || 0, '0%')
+                    value: report.value && Ext.util.Format.number(report.value || 0, '0%') || '?'
                 },
                 textAlign: 'left',
                 tooltip: '<div>' + report.tooltip + '</div>',
