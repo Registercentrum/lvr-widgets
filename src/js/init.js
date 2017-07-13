@@ -6,6 +6,7 @@
     var isTemplate = window.isTemplate || function() {
         return true;
     }
+    var FREQUENCY_LIMIT = 60;
     var templateVariables = window._devTemplateVariables || {
         diagnosis: '{{diagnosis}}',
         container: '{{ct}}'
@@ -184,6 +185,15 @@
                                     );
                                 }
                             }
+                        },
+                        renderer: function(sprite, config, rendererData, index) {
+                            var storeItem = rendererData.store.getAt(index);
+                            // return Object.assign(rendererData, { fill: storeItem.get('x') > 15 ? 'green' : 'red' });
+                            // console.log(storeItem.get('freq'));
+                            if(storeItem.get('freq') < FREQUENCY_LIMIT) {
+                                return Ext.apply({}, rendererData, { fill: 'salmon' });
+                            }
+                            return;
                         }
                     });
                     chart.setSprites({
