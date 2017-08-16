@@ -48,7 +48,7 @@
             insetPadding: 0
         });
     }
-    function getChoiceFromState(state, danger, success, standard, insufficient) {
+    function getChoiceFromState(state, danger, success, standard, insufficient, missing) {
         switch (state) {
             case 'danger':
                 return danger;
@@ -56,12 +56,17 @@
                 return success;
             case 'insufficient':
                 return insufficient;
+            case 'missing':
+                return missing;
             default:
                 return standard;
         }
     }
 
     function getState(report) {
+        if (report.value === null) {
+            return 'missing';
+        }
         if (report.limit !== null) {
             if (report.Svarsfrekvens < FREQUENCE_LIMIT) {
                 return 'insufficient';
@@ -100,7 +105,7 @@
                 toggleGroup: 'heatg',
                 pressedCls: 'gauge-button-pressed',
                 cls: 'gauge-btn gauge-btn' +
-                    getChoiceFromState(state, '-danger', '-success', '-info', '-insufficient'),
+                    getChoiceFromState(state, '-danger', '-success', '-info', '-insufficient', '-missing'),
                 style: {
                     borderLeft: '1px solid #ccc',
                     width: '100%'
@@ -109,7 +114,7 @@
                 frame: false,
                 data: {
                     text: report.description,
-                    value: Ext.util.Format.number(report.value || 0, '0%')
+                    value: report.value && Ext.util.Format.number(report.value || 0, '0%') || '?'
                 },
                 textAlign: 'left',
                 tooltip: '<div>' + report.tooltip + '</div>',
@@ -118,7 +123,7 @@
                     '<div class="value-text pull-left">{value}</div>' +
                     '<div class="gauge-desc pull-left">{text}</div>' +
                     '<div class="gauge-icon pull-right">' +
-                    getChoiceFromState(state, '&#xf071;', '&#xf00c;', '', '') +
+                    getChoiceFromState(state, '&#xf071;', '&#xf00c;', '', '', '') +
                     '</div>' +
                     '</div>',
                 listeners: {
@@ -158,6 +163,7 @@
                         '#ebccd1',
                         '#d6e9c6',
                         '#bce8f1',
+                        '#ccc',
                         '#ccc'
                     );
                     config.items = itemsFactory(report, state, clickHandler);

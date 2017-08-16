@@ -60,6 +60,11 @@
     background-color: #e0e0e0;
 }
 
+.gauge-btn.gauge-btn-missing {
+    color: #858585; 
+    background-color: #fff;
+}
+
 .gauge-btn.gauge-btn-success.x-btn-over {
     background-color: #cae0b7;
 }
@@ -74,6 +79,10 @@
 
 .gauge-btn.gauge-btn-insufficient.x-btn-over {
     background-color: #cecece;
+}
+
+.gauge-btn.gauge-btn-missing.x-btn-over {
+    background-color: #f7f7f7;
 }
 
 .gauge-btn.gauge-btn-danger .gauge-icon {
