@@ -8,6 +8,6 @@ gulp
 
 ## Build
 ```
-gulp build:scripts
+gulp scripts:build
 ```
 Then copy code from `dist` folder.
